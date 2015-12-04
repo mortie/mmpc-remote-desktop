@@ -1,6 +1,6 @@
 {
 	"port": 10200,
-	"host": "10.0.101.12",
+	"host": "localhost",
 	"width": 1920,
 	"height": 1080,
 	"stream_port": 10201,

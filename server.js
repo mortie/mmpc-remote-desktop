@@ -1,10 +1,17 @@
 var express = require("express");
 var fs = require("fs");
 var crypto = require("crypto");
+var colors = require("colors");
 
 var streamServer = require("./lib/stream-server");
 var screenRecorder = require("./js/screen-recorder");
 var xdo = require("./js/xdotool");
+
+colors.setTheme({
+	info: "grey",
+	error: "red",
+	ok: "green"
+});
 
 var conf = JSON.parse(fs.readFileSync("conf.json"));
 var tmp;
@@ -19,7 +26,7 @@ conf.secret = tmp;
 var app = express();
 app.use(express.static("web"));
 app.listen(conf.port);
-console.log("Listening to port "+conf.port+".");
+console.log(("Listening to port "+conf.port+".").ok);
 
 //Streaming server
 streamServer.stream(secret, conf.stream_port, conf.ws_port);

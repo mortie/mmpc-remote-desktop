@@ -12,7 +12,6 @@ function xdo(cmd, args) {
 	args.unshift(0);
 	args[0] = cmd;
 	exec("xdotool", args);
-	console.log("xdotool", args.join(" "));
 }
 
 function mousedown(button) {
