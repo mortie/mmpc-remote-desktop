@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Screen</title>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		body {
+			background: #333;
+			text-align: center;
+			margin-top: 10%;
+		}
+		#videoCanvas {
+			/* Always stretch the canvas to 640x480, regardless of its
+			internal size. */
+			width: 640px;
+			height: 480px;
+		}
+	</style>
+</head>
+<body>
+	<!-- The Canvas size specified here is the "initial" internal resolution. jsmpeg will
+		change this internal resolution to whatever the source provides. The size the
+		canvas is displayed on the website is dictated by the CSS style.
+	-->
+	<canvas id="canvas" width="640" height="480">
+		<p>
+			Please use a browser that supports the Canvas Element, like
+			<a href="http://www.google.com/chrome">Chrome</a>,
+			<a href="http://www.mozilla.com/firefox/">Firefox</a>,
+			<a href="http://www.apple.com/safari/">Safari</a> or Internet Explorer 10
+		</p>
+	</canvas>
+	<script src="jsmpg.js"></script>
+	<script src="conf.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
