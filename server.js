@@ -4,7 +4,7 @@ var crypto = require("crypto");
 var colors = require("colors");
 
 var streamServer = require("./lib/stream-server");
-var screenRecorder = require("./js/screen-recorder");
+var ScreenRecorder = require("./js/screen-recorder");
 var xdo = require("./js/xdotool");
 
 colors.setTheme({
@@ -29,10 +29,20 @@ app.listen(conf.port);
 console.log(("Listening to port "+conf.port+".").ok);
 
 //Streaming server
-streamServer.stream(secret, conf.stream_port, conf.ws_port);
+var stream = streamServer.stream(secret, conf.stream_port, conf.ws_port);
 
 //Screen Recorder
-screenRecorder.record(conf.width, conf.height, secret, conf.stream_port);
+var recorder = new ScreenRecorder(conf.width, conf.height, secret, conf.stream_port);
+
+stream.onupdate = function(numConnections) {
+	if (numConnections === 0) { 
+		console.log("Stopping screen recording.".info);
+		recorder.stop();
+	} else if (!recorder.isRecording) {
+		console.log("Starting screen recording.".info);
+		recorder.record();
+	}
+};
 
 //Keyboard/mouse
 app.get("/in/mousedown/:button", function(req, res) {
