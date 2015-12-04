@@ -5,7 +5,8 @@ exports.mousedown = mousedown;
 exports.mouseup = mouseup;
 exports.mousemove = mousemove;
 exports.click = click;
-exports.key = key;
+exports.keydown = keydown;
+exports.keyup = keyup;
 
 function xdo(cmd, args) {
 	args.unshift(0);
@@ -30,6 +31,10 @@ function click(button) {
 	xdo("click", [button]);
 }
 
-function key(character) {
-	xdo("key", [character]);
+function keydown(key) {
+	xdo("keydown", [key]);
+}
+
+function keyup(key) {
+	xdo("keyup", [key]);
 }
