@@ -19,10 +19,7 @@ var tmp;
 var secret = crypto.randomBytes(16).toString("hex");
 
 //Static web content
-tmp = conf.secret;
-conf.secret = "";
 fs.writeFileSync("web/conf.js", "window.conf = "+JSON.stringify(conf)+";");
-conf.secret = tmp;
 var app = express();
 app.use(express.static("web"));
 app.listen(conf.port);

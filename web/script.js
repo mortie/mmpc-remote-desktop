@@ -1,7 +1,6 @@
 function xdo(cmd, args) {
 	var xhr = new XMLHttpRequest();
 	var url = "http://"+conf.host+":"+conf.port+"/in/"+cmd+"/"+(args.join("/"));
-	console.log(url);
 	xhr.open("GET", url);
 	xhr.send();
 }
@@ -12,7 +11,16 @@ var client = new WebSocket("ws://"+conf.host+":"+conf.ws_port);
 var canvas = document.getElementById("canvas");
 var player = new jsmpeg(client, {canvas:canvas});
 
-var scaleValue = 0.7;
+var scaleValue;
+function calcScaleValue() {
+	var scaleValueX = window.innerWidth / conf.width;
+	var scaleValueY = window.innerHeight / conf.height;
+	scaleValue = Math.min(scaleValueX, scaleValueY);
+	canvas.style.width = (conf.width * scaleValue)+"px";
+	canvas.style.height = (conf.height * scaleValue)+"px";
+}
+calcScaleValue();
+window.addEventListener("resize", calcScaleValue);
 
 function modX(x) {
 	return Math.floor(x / scaleValue);
@@ -20,9 +28,6 @@ function modX(x) {
 function modY(y) {
 	return Math.floor(y / scaleValue);
 }
-
-canvas.width = (conf.width * scaleValue)+"px";
-canvas.style.height = (conf.height * scaleValue)+"px";
 
 var mouseX;
 var mouseY;
@@ -56,7 +61,6 @@ canvas.addEventListener("mousemove", function(evt) {
 window.addEventListener("keydown", function(evt) {
 	evt.preventDefault();
 	var id = getKey(evt);
-	console.log(id);
 	if (id)
 		xdo("keydown", [id]);
 });
@@ -114,7 +118,6 @@ var specialKeys = {
 };
 function getKey(evt) {
 	var id = evt.key || evt.keyIdentifier;
-	console.log(id);
 	if (specialKeys[id.toLowerCase()])
 		id = specialKeys[id.toLowerCase()];
 	else if (id.indexOf("U+") === 0 && !/[a-zA-Z0-9]/.test(String.fromCharCode(evt.keyCode)))
