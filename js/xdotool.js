@@ -1,4 +1,4 @@
-var exec = require("child_process").spawn;
+var spawn = require("child_process").spawn;
 
 exports.xdo = xdo;
 exports.mousedown = mousedown;
@@ -11,7 +11,7 @@ exports.keyup = keyup;
 function xdo(cmd, args) {
 	args.unshift(0);
 	args[0] = cmd;
-	exec("xdotool", args);
+	spawn("xdotool", args);
 }
 
 function mousedown(button) {

@@ -1,4 +1,4 @@
-var exec = require("child_process").spawn;
+var spawn = require("child_process").spawn;
 var colors = require("colors");
 
 module.exports = ScreenRecorder;
@@ -24,7 +24,7 @@ function ScreenRecorder(width, height, secret, streamPort) {
 ScreenRecorder.prototype.record = function() {
 	this.isRecording = true;
 
-	this.child = exec("ffmpeg", [
+	this.child = spawn("ffmpeg", [
 		"-s", this.width+"x"+this.height,
 		"-f", "x11grab",
 		"-i", ":0.0",
